@@ -4,7 +4,7 @@
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive -w"
+    "test": "mocha -w"
   },
   "directories": {
     "test": "test"
@@ -16,7 +16,8 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "sqlite3": "^3.1.13"
   },
   "repository": {
     "type": "git",
