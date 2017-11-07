@@ -1,0 +1,35 @@
+{
+  "name": "sequelize-helper",
+  "version": "1.0.0",
+  "description": "Useful features to facilitate the use of Sequelize",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive -w"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "sequelize": "^4.22.5"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^4.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marco-meini/sequelize-helper.git"
+  },
+  "keywords": [
+    "Sequelize",
+    "helper"
+  ],
+  "author": "Marco Meini",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marco-meini/sequelize-helper/issues"
+  },
+  "homepage": "https://github.com/marco-meini/sequelize-helper#readme"
+}
