@@ -36,6 +36,10 @@ const Filter = function (dialect) {
           value = moment.utc(value).toDate()
           condition[column] = value
           break
+        case Sequelize.DATEONLY:
+          value = moment.utc(value).startOf('day').toDate()
+          condition[column] = value
+          break
         default:
           condition[column] = value
           break
