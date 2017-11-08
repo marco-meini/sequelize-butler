@@ -38,7 +38,37 @@ describe('Filter', () => {
       let filter = new Filter(mssqlSupport.sequelize.getDialect())
       filter.addLike(['column1', 'column2'], 'abc')
       let where = filter.getWhere()
-      expect(mssqlSupport.getSql('table', {where: where})).to.contain('([table].[column1] LIKE N\'%abc%\' OR [table].[column2] LIKE N\'%abc%\')')
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] LIKE N'%abc%' OR [table].[column2] LIKE N'%abc%')")
+    })
+  })
+
+  describe('Equal', () => {
+    it('Add equal sqlite', () => {
+      let filter = new Filter(sqliteSupport.sequelize.getDialect())
+      filter.addEqual('column1', 10)
+      let where = filter.getWhere()
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` = 10)')
+    })
+
+    it('Add equal mysql', () => {
+      let filter = new Filter(mysqlSupport.sequelize.getDialect())
+      filter.addEqual('column1', 10)
+      let where = filter.getWhere()
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` = 10)')
+    })
+
+    it('Add equal postgres', () => {
+      let filter = new Filter(postgresSupport.sequelize.getDialect())
+      filter.addEqual('column1', 10)
+      let where = filter.getWhere()
+      expect(postgresSupport.getSql('table', {where: where})).to.contain('("table"."column1" = 10)')
+    })
+
+    it('Add equal mssql', () => {
+      let filter = new Filter(mssqlSupport.sequelize.getDialect())
+      filter.addEqual('column1', 10)
+      let where = filter.getWhere()
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain('([table].[column1] = 10)')
     })
   })
 })
