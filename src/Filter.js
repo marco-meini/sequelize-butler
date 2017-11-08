@@ -28,6 +28,26 @@ const Filter = function (dialect) {
     }
   }
 
+  this.addNotLike = (columns, value) => {
+    if (columns && columns.length && value && !_.isEmpty(value)) {
+      let likeConditions = []
+      columns.forEach((column) => {
+        let condition = {}
+        if (dialect === 'postgres') {
+          condition[column] = {
+            [Sequelize.Op.notILike]: '%' + value + '%'
+          }
+        } else {
+          condition[column] = {
+            [Sequelize.Op.notLike]: '%' + value + '%'
+          }
+        }
+        likeConditions.push(condition)
+      })
+      conditions.push({ [Sequelize.Op.and]: _.assign.apply(this, likeConditions) })
+    }
+  }
+
   this.addEqual = (column, value, type) => {
     if (column && value) {
       let condition = {}

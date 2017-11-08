@@ -43,6 +43,36 @@ describe('Filter', () => {
     })
   })
 
+  describe('Not Like', () => {
+    it('Add like sqlite', () => {
+      let filter = new Filter(sqliteSupport.sequelize.getDialect())
+      filter.addNotLike(['column1', 'column2'], 'abc')
+      let where = filter.getWhere()
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` NOT LIKE '%abc%' AND `table`.`column2` NOT LIKE '%abc%')")
+    })
+
+    it('Add like mysql', () => {
+      let filter = new Filter(mysqlSupport.sequelize.getDialect())
+      filter.addNotLike(['column1', 'column2'], 'abc')
+      let where = filter.getWhere()
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` NOT LIKE '%abc%' AND `table`.`column2` NOT LIKE '%abc%')")
+    })
+
+    it('Add like postgres', () => {
+      let filter = new Filter(postgresSupport.sequelize.getDialect())
+      filter.addNotLike(['column1', 'column2'], 'abc')
+      let where = filter.getWhere()
+      expect(postgresSupport.getSql('table', {where: where})).to.contain('("table"."column1" NOT ILIKE \'%abc%\' AND "table"."column2" NOT ILIKE \'%abc%\')')
+    })
+
+    it('Add like mssql', () => {
+      let filter = new Filter(mssqlSupport.sequelize.getDialect())
+      filter.addNotLike(['column1', 'column2'], 'abc')
+      let where = filter.getWhere()
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] NOT LIKE N'%abc%' AND [table].[column2] NOT LIKE N'%abc%')")
+    })
+  })
+
   describe('Equal integer', () => {
     it('Add equal sqlite', () => {
       let filter = new Filter(sqliteSupport.sequelize.getDialect())
