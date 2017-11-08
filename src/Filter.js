@@ -53,15 +53,43 @@ const Filter = function (dialect) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          value = moment.utc(value).toDate()
-          condition[column] = value
+          condition[column] = moment.utc(value).toDate()
           break
         case Sequelize.DATEONLY:
           value = moment.utc(value).startOf('day').toDate()
-          condition[column] = value
+          condition[column] = moment.utc(value).toDate()
           break
         default:
           condition[column] = value
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
+  this.addNotEqual = (column, value, type) => {
+    if (column && value) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.ne]: moment.utc(value).toDate()
+          }
+          break
+        case Sequelize.DATEONLY:
+          condition[column] = {
+            [Sequelize.Op.ne]: moment.utc(value).startOf('day').toDate()
+          }
+          break
+        case Sequelize.BOOLEAN:
+          condition[column] = {
+            [Sequelize.Op.not]: value
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.ne]: value
+          }
           break
       }
       conditions.push(condition)

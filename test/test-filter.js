@@ -193,6 +193,66 @@ describe('Filter', () => {
     })
   })
 
+  describe('Not Equal boolean', () => {
+    it('Add equal sqlite', () => {
+      let filter = new Filter(sqliteSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', true, Sequelize.BOOLEAN)
+      let where = filter.getWhere()
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` IS NOT 1)')
+    })
+
+    it('Add equal mysql', () => {
+      let filter = new Filter(mysqlSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', true, Sequelize.BOOLEAN)
+      let where = filter.getWhere()
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` IS NOT true)')
+    })
+
+    it('Add equal postgres', () => {
+      let filter = new Filter(postgresSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', true, Sequelize.BOOLEAN)
+      let where = filter.getWhere()
+      expect(postgresSupport.getSql('table', {where: where})).to.contain('("table"."column1" IS NOT true)')
+    })
+
+    it('Add equal mssql', () => {
+      let filter = new Filter(mssqlSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', true, Sequelize.BOOLEAN)
+      let where = filter.getWhere()
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain('([table].[column1] IS NOT 1)')
+    })
+  })
+
+  describe('Not Equal date', () => {
+    it('Add equal sqlite', () => {
+      let filter = new Filter(sqliteSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+      let where = filter.getWhere()
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` != '2017-01-01 00:00:00.000 +00:00')")
+    })
+
+    it('Add equal mysql', () => {
+      let filter = new Filter(mysqlSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+      let where = filter.getWhere()
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` != '2017-01-01 00:00:00')")
+    })
+
+    it('Add equal postgres', () => {
+      let filter = new Filter(postgresSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+      let where = filter.getWhere()
+      expect(postgresSupport.getSql('table', {where: where})).to.contain('("table"."column1" != \'2017-01-01 00:00:00.000 +00:00\')')
+    })
+
+    it('Add equal mssql', () => {
+      let filter = new Filter(mssqlSupport.sequelize.getDialect())
+      filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+      let where = filter.getWhere()
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] != '2017-01-01 00:00:00.000 +00:00')")
+    })
+  })
+
   describe('Get where', () => {
     it('Get where sqlite', () => {
       let filter = new Filter(sqliteSupport.sequelize.getDialect())
