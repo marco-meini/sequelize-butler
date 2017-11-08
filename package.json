@@ -20,7 +20,8 @@
     "sqlite3": "^3.1.13",
     "mysql2": "^1.4.2",
     "pg": "^7.4.0",
-    "tedious": "^2.1.1"
+    "tedious": "^2.1.1",
+    "moment": "^2.19.1"
   },
   "repository": {
     "type": "git",

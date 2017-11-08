@@ -2,6 +2,7 @@
 
 const _ = require('lodash')
 const Sequelize = require('sequelize')
+const moment = require('moment')
 
 const Filter = function (dialect) {
   let where = {}
@@ -27,10 +28,18 @@ const Filter = function (dialect) {
     }
   }
 
-  this.addEqual = (column, value) => {
+  this.addEqual = (column, value, type) => {
     if (column && value) {
       let condition = {}
-      condition[column] = value
+      switch (type) {
+        case Sequelize.DATE:
+          value = moment.utc(value).toDate()
+          condition[column] = value
+          break
+        default:
+          condition[column] = value
+          break
+      }
       conditions.push(condition)
     }
   }
