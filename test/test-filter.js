@@ -196,4 +196,38 @@ describe('Filter', () => {
       expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] = 1 AND [table].[column2] = N'test'")
     })
   })
+
+  describe('Get where using or', () => {
+    it('Get using or where sqlite', () => {
+      let filter = new Filter(sqliteSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhereUsingOr()
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = 1 OR `table`.`column2` = 'test')")
+    })
+
+    it('Get using or where mysql', () => {
+      let filter = new Filter(mysqlSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhereUsingOr()
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = 1 OR `table`.`column2` = 'test')")
+    })
+
+    it('Get using or where postgres', () => {
+      let filter = new Filter(postgresSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhereUsingOr()
+      expect(postgresSupport.getSql('table', {where: where})).to.contain('("table"."column1" = 1 OR "table"."column2" = \'test\')')
+    })
+
+    it('Get using or where mssql', () => {
+      let filter = new Filter(mssqlSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhereUsingOr()
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] = 1 OR [table].[column2] = N'test'")
+    })
+  })
 })

@@ -56,6 +56,15 @@ const Filter = function (dialect) {
     }
     return where
   }
+
+  this.getWhereUsingOr = () => {
+    if (conditions.length) {
+      where = {
+        [Sequelize.Op.or]: _.assign.apply(this, conditions)
+      }
+    }
+    return where
+  }
 }
 
 module.exports = Filter
