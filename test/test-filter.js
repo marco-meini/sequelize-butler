@@ -108,14 +108,14 @@ describe('Filter', () => {
       let filter = new Filter(sqliteSupport.sequelize.getDialect())
       filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATE)
       let where = filter.getWhere()
-      expect(sqliteSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` = \'2017-01-01 18:00:00.000 +00:00\')')
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = '2017-01-01 18:00:00.000 +00:00')")
     })
 
     it('Add equal mysql', () => {
       let filter = new Filter(mysqlSupport.sequelize.getDialect())
       filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATE)
       let where = filter.getWhere()
-      expect(mysqlSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` = \'2017-01-01 18:00:00\')')
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = '2017-01-01 18:00:00')")
     })
 
     it('Add equal postgres', () => {
@@ -129,7 +129,7 @@ describe('Filter', () => {
       let filter = new Filter(mssqlSupport.sequelize.getDialect())
       filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATE)
       let where = filter.getWhere()
-      expect(mssqlSupport.getSql('table', {where: where})).to.contain('([table].[column1] = \'2017-01-01 18:00:00.000 +00:00\')')
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] = '2017-01-01 18:00:00.000 +00:00')")
     })
   })
 
@@ -138,14 +138,14 @@ describe('Filter', () => {
       let filter = new Filter(sqliteSupport.sequelize.getDialect())
       filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
       let where = filter.getWhere()
-      expect(sqliteSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` = \'2017-01-01 00:00:00.000 +00:00\')')
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = '2017-01-01 00:00:00.000 +00:00')")
     })
 
     it('Add equal mysql', () => {
       let filter = new Filter(mysqlSupport.sequelize.getDialect())
       filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
       let where = filter.getWhere()
-      expect(mysqlSupport.getSql('table', {where: where})).to.contain('(`table`.`column1` = \'2017-01-01 00:00:00\')')
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = '2017-01-01 00:00:00')")
     })
 
     it('Add equal postgres', () => {
@@ -159,7 +159,41 @@ describe('Filter', () => {
       let filter = new Filter(mssqlSupport.sequelize.getDialect())
       filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
       let where = filter.getWhere()
-      expect(mssqlSupport.getSql('table', {where: where})).to.contain('([table].[column1] = \'2017-01-01 00:00:00.000 +00:00\')')
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] = '2017-01-01 00:00:00.000 +00:00')")
+    })
+  })
+
+  describe('Get where', () => {
+    it('Get where sqlite', () => {
+      let filter = new Filter(sqliteSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhere()
+      expect(sqliteSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = 1 AND `table`.`column2` = 'test')")
+    })
+
+    it('Get where mysql', () => {
+      let filter = new Filter(mysqlSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhere()
+      expect(mysqlSupport.getSql('table', {where: where})).to.contain("(`table`.`column1` = 1 AND `table`.`column2` = 'test')")
+    })
+
+    it('Get where postgres', () => {
+      let filter = new Filter(postgresSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhere()
+      expect(postgresSupport.getSql('table', {where: where})).to.contain('("table"."column1" = 1 AND "table"."column2" = \'test\')')
+    })
+
+    it('Get where mssql', () => {
+      let filter = new Filter(mssqlSupport.sequelize.getDialect())
+      filter.addEqual('column1', 1)
+      filter.addEqual('column2', 'test')
+      let where = filter.getWhere()
+      expect(mssqlSupport.getSql('table', {where: where})).to.contain("([table].[column1] = 1 AND [table].[column2] = N'test'")
     })
   })
 })
