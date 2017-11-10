@@ -4,8 +4,7 @@ const _ = require('lodash')
 const Sequelize = require('sequelize')
 const moment = require('moment')
 
-const Filter = function (dialect) {
-  let where = {}
+const Filter = function (connection) {
   let conditions = []
 
   this.addLike = (columns, value) => {
@@ -13,7 +12,7 @@ const Filter = function (dialect) {
       let likeConditions = []
       columns.forEach((column) => {
         let condition = {}
-        if (dialect === 'postgres') {
+        if (connection.getDialect() === 'postgres') {
           condition[column] = {
             [Sequelize.Op.iLike]: '%' + value + '%'
           }
@@ -33,7 +32,7 @@ const Filter = function (dialect) {
       let likeConditions = []
       columns.forEach((column) => {
         let condition = {}
-        if (dialect === 'postgres') {
+        if (connection.getDialect() === 'postgres') {
           condition[column] = {
             [Sequelize.Op.notILike]: '%' + value + '%'
           }
@@ -53,14 +52,20 @@ const Filter = function (dialect) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          condition[column] = moment.utc(value).toDate()
+          condition[column] = {
+            [Sequelize.Op.eq]: moment.utc(value).toDate()
+          }
           break
         case Sequelize.DATEONLY:
           value = moment.utc(value).startOf('day').toDate()
-          condition[column] = moment.utc(value).toDate()
+          condition[column] = {
+            [Sequelize.Op.eq]: moment.utc(value).toDate()
+          }
           break
         default:
-          condition[column] = value
+          condition[column] = {
+            [Sequelize.Op.eq]: value
+          }
           break
       }
       conditions.push(condition)
@@ -96,22 +101,26 @@ const Filter = function (dialect) {
     }
   }
 
+  this.addSequelizeCondition = (condition) => {
+    conditions.push(condition)
+  }
+
   this.getWhere = () => {
     if (conditions.length) {
-      where = {
-        [Sequelize.Op.and]: _.assign.apply(this, conditions)
+      return {
+        [Sequelize.Op.and]: conditions
       }
     }
-    return where
+    return {}
   }
 
   this.getWhereUsingOr = () => {
     if (conditions.length) {
-      where = {
-        [Sequelize.Op.or]: _.assign.apply(this, conditions)
+      return {
+        [Sequelize.Op.or]: conditions
       }
     }
-    return where
+    return {}
   }
 }
 
