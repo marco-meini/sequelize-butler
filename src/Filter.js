@@ -237,6 +237,34 @@ const Filter = function (connection) {
     }
   }
 
+  this.addIn = (column, values, type) => {
+    if (column && values && values.length) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.in]: values.map((value) => {
+              return moment(value).format('YYYY-MM-DDTHH:mm:ss')
+            })
+          }
+          break
+        case Sequelize.DATEONLY:
+          condition[column] = {
+            [Sequelize.Op.in]: values.map((value) => {
+              return moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss')
+            })
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.in]: values
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
   this.addSequelizeCondition = (condition) => {
     conditions.push(condition)
   }

@@ -490,4 +490,121 @@ describe('Filter', () => {
       })
     })
   })
+
+  describe('In', () => {
+    it('Integer', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addIn('column1', [1, 2])
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain('(`table`.`column1` IN (1, 2))')
+            break
+          case 'mysql':
+            expect(sql).to.contain('(`table`.`column1` IN (1, 2))')
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" IN (1, 2))')
+            break
+          case 'mssql':
+            expect(sql).to.contain('([table].[column1] IN (1, 2))')
+            break
+        }
+      })
+    })
+
+    it('Datetime', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATE)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` IN ('2017-01-01T18:00:00', '2017-01-02T18:00:00'))")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` IN ('2017-01-01T18:00:00', '2017-01-02T18:00:00'))")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" IN (\'2017-01-01T18:00:00\', \'2017-01-02T18:00:00\'))')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] IN (N'2017-01-01T18:00:00', N'2017-01-02T18:00:00'))")
+            break
+        }
+      })
+    })
+
+    // it('Date', () => {
+    //   supports.forEach((support) => {
+    //     let filter = new Filter(support.sequelize)
+    //     filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+    //     let where = filter.getWhere()
+    //     let sql = support.getSql('table', {where: where})
+    //     switch (support.sequelize.getDialect()) {
+    //       case 'sqlite':
+    //         expect(sql).to.contain("(CAST('column1' AS DATE) = '2017-01-01T00:00:00')")
+    //         break
+    //       case 'mysql':
+    //         expect(sql).to.contain("(CAST('column1' AS DATE) = '2017-01-01T00:00:00')")
+    //         break
+    //       case 'postgres':
+    //         expect(sql).to.contain("(CAST('column1' AS DATE) = '2017-01-01T00:00:00')")
+    //         break
+    //       case 'mssql':
+    //         expect(sql).to.contain("(CAST(N'column1' AS DATE) = N'2017-01-01T00:00:00')")
+    //         break
+    //     }
+    //   })
+    // })
+
+    // it('NOT boolean', () => {
+    //   supports.forEach((support) => {
+    //     let filter = new Filter(support.sequelize)
+    //     filter.addNotEqual('column1', true, Sequelize.BOOLEAN)
+    //     let where = filter.getWhere()
+    //     let sql = support.getSql('table', {where: where})
+    //     switch (support.sequelize.getDialect()) {
+    //       case 'sqlite':
+    //         expect(sql).to.contain('(`table`.`column1` IS NOT 1)')
+    //         break
+    //       case 'mysql':
+    //         expect(sql).to.contain('(`table`.`column1` IS NOT true)')
+    //         break
+    //       case 'postgres':
+    //         expect(sql).to.contain('("table"."column1" IS NOT true)')
+    //         break
+    //       case 'mssql':
+    //         expect(sql).to.contain('([table].[column1] IS NOT 1)')
+    //         break
+    //     }
+    //   })
+    // })
+
+  // it('NOT Date', () => {
+  //   supports.forEach((support) => {
+  //     let filter = new Filter(support.sequelize)
+  //     filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+  //     let where = filter.getWhere()
+  //     let sql = support.getSql('table', {where: where})
+  //     switch (support.sequelize.getDialect()) {
+  //       case 'sqlite':
+  //         expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
+  //         break
+  //       case 'mysql':
+  //         expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
+  //         break
+  //       case 'postgres':
+  //         expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
+  //         break
+  //       case 'mssql':
+  //         expect(sql).to.contain("(CAST(N'column1' AS DATE) != N'2017-01-01T00:00:00')")
+  //         break
+  //     }
+  //   })
+  // })
+  })
 })
