@@ -101,6 +101,31 @@ const Filter = function (connection) {
     }
   }
 
+  this.addGreaterThan = (column, value, type) => {
+    if (column && value) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.gt]: moment.utc(value).toDate()
+          }
+          break
+        case Sequelize.DATEONLY:
+          value = moment.utc(value).startOf('day').toDate()
+          condition[column] = {
+            [Sequelize.Op.gt]: moment.utc(value).toDate()
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.gt]: value
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
   this.addSequelizeCondition = (condition) => {
     conditions.push(condition)
   }
