@@ -6,9 +6,10 @@ const moment = require('moment')
 
 const Filter = function (connection) {
   let conditions = []
+  let milliseconds = connection.getDialect() === 'mssql' ? 3 : 5
 
   this.addLike = (columns, value) => {
-    if (columns && columns.length && value && !_.isEmpty(value)) {
+    if (columns && columns.length && value && !_.isEmpty(value) && _.isString(value)) {
       let likeConditions = []
       columns.forEach((column) => {
         let condition = {}
@@ -28,7 +29,7 @@ const Filter = function (connection) {
   }
 
   this.addNotLike = (columns, value) => {
-    if (columns && columns.length && value && !_.isEmpty(value)) {
+    if (columns && columns.length && value && !_.isEmpty(value) && _.isString(value)) {
       let likeConditions = []
       columns.forEach((column) => {
         let condition = {}
@@ -52,15 +53,11 @@ const Filter = function (connection) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          condition[column] = {
-            [Sequelize.Op.eq]: moment.utc(value).toDate()
-          }
+          let cast = connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME'
+          condition = Sequelize.where(Sequelize.cast(column, cast), moment(value).format('YYYY-MM-DDTHH:mm:ss'))
           break
         case Sequelize.DATEONLY:
-          value = moment.utc(value).startOf('day').toDate()
-          condition[column] = {
-            [Sequelize.Op.eq]: moment.utc(value).toDate()
-          }
+          condition = Sequelize.where(Sequelize.cast(column, 'DATE'), moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss'))
           break
         default:
           condition[column] = {
@@ -77,14 +74,11 @@ const Filter = function (connection) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          condition[column] = {
-            [Sequelize.Op.ne]: moment.utc(value).toDate()
-          }
+          let cast = connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME'
+          condition = Sequelize.where(Sequelize.cast(column, cast), '!=', moment(value).format('YYYY-MM-DDTHH:mm:ss'))
           break
         case Sequelize.DATEONLY:
-          condition[column] = {
-            [Sequelize.Op.ne]: moment.utc(value).startOf('day').toDate()
-          }
+          condition = Sequelize.where(Sequelize.cast(column, 'DATE'), '!=', moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss'))
           break
         case Sequelize.BOOLEAN:
           condition[column] = {
@@ -106,15 +100,11 @@ const Filter = function (connection) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          condition[column] = {
-            [Sequelize.Op.gt]: moment.utc(value).toDate()
-          }
+          let cast = connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME'
+          condition = Sequelize.where(Sequelize.cast(column, cast), '>', moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         case Sequelize.DATEONLY:
-          value = moment.utc(value).startOf('day').toDate()
-          condition[column] = {
-            [Sequelize.Op.gt]: moment.utc(value).toDate()
-          }
+          condition = Sequelize.where(Sequelize.cast(column, 'DATE'), '>', moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         default:
           condition[column] = {
@@ -131,15 +121,11 @@ const Filter = function (connection) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          condition[column] = {
-            [Sequelize.Op.gte]: moment.utc(value).toDate()
-          }
+          let cast = connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME'
+          condition = Sequelize.where(Sequelize.cast(column, cast), '>=', moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         case Sequelize.DATEONLY:
-          value = moment.utc(value).startOf('day').toDate()
-          condition[column] = {
-            [Sequelize.Op.gte]: moment.utc(value).toDate()
-          }
+          condition = Sequelize.where(Sequelize.cast(column, 'DATE'), '>=', moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         default:
           condition[column] = {
@@ -156,15 +142,11 @@ const Filter = function (connection) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          condition[column] = {
-            [Sequelize.Op.lt]: moment.utc(value).toDate()
-          }
+          let cast = connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME'
+          condition = Sequelize.where(Sequelize.cast(column, cast), '<', moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         case Sequelize.DATEONLY:
-          value = moment.utc(value).startOf('day').toDate()
-          condition[column] = {
-            [Sequelize.Op.lt]: moment.utc(value).toDate()
-          }
+          condition = Sequelize.where(Sequelize.cast(column, 'DATE'), '<', moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         default:
           condition[column] = {
@@ -181,15 +163,11 @@ const Filter = function (connection) {
       let condition = {}
       switch (type) {
         case Sequelize.DATE:
-          condition[column] = {
-            [Sequelize.Op.lte]: moment.utc(value).toDate()
-          }
+          let cast = connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME'
+          condition = Sequelize.where(Sequelize.cast(column, cast), '<=', moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         case Sequelize.DATEONLY:
-          value = moment.utc(value).startOf('day').toDate()
-          condition[column] = {
-            [Sequelize.Op.lte]: moment.utc(value).toDate()
-          }
+          condition = Sequelize.where(Sequelize.cast(column, 'DATE'), '<=', moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')))
           break
         default:
           condition[column] = {
@@ -207,14 +185,17 @@ const Filter = function (connection) {
       switch (type) {
         case Sequelize.DATE:
           condition[column] = {
-            [Sequelize.Op.between]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+            [Sequelize.Op.between]: [
+              moment(from).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')),
+              moment(to).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '9'))
+            ]
           }
           break
         case Sequelize.DATEONLY:
-          from = moment.utc(from).startOf('day').toDate()
-          to = moment.utc(to).startOf('day').toDate()
+          from = moment(from).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0'))
+          to = moment(to).endOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '9'))
           condition[column] = {
-            [Sequelize.Op.between]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+            [Sequelize.Op.between]: [from, to]
           }
           break
         default:
@@ -233,14 +214,17 @@ const Filter = function (connection) {
       switch (type) {
         case Sequelize.DATE:
           condition[column] = {
-            [Sequelize.Op.notBetween]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+            [Sequelize.Op.notBetween]: [
+              moment(from).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0')),
+              moment(to).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '9'))
+            ]
           }
           break
         case Sequelize.DATEONLY:
-          from = moment.utc(from).startOf('day').toDate()
-          to = moment.utc(to).startOf('day').toDate()
+          from = moment(from).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0'))
+          to = moment(to).endOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '9'))
           condition[column] = {
-            [Sequelize.Op.notBetween]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+            [Sequelize.Op.notBetween]: [from, to]
           }
           break
         default:
