@@ -101,7 +101,7 @@ const Filter = function (connection) {
     }
   }
 
-  this.addGreaterThan = (column, value, type) => {
+  this.addGreaterTo = (column, value, type) => {
     if (column && value) {
       let condition = {}
       switch (type) {
@@ -119,6 +119,81 @@ const Filter = function (connection) {
         default:
           condition[column] = {
             [Sequelize.Op.gt]: value
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
+  this.addGreaterEqualTo = (column, value, type) => {
+    if (column && value) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.gte]: moment.utc(value).toDate()
+          }
+          break
+        case Sequelize.DATEONLY:
+          value = moment.utc(value).startOf('day').toDate()
+          condition[column] = {
+            [Sequelize.Op.gte]: moment.utc(value).toDate()
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.gte]: value
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
+  this.addLessTo = (column, value, type) => {
+    if (column && value) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.lt]: moment.utc(value).toDate()
+          }
+          break
+        case Sequelize.DATEONLY:
+          value = moment.utc(value).startOf('day').toDate()
+          condition[column] = {
+            [Sequelize.Op.lt]: moment.utc(value).toDate()
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.lt]: value
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
+  this.addLessEqualTo = (column, value, type) => {
+    if (column && value) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.lte]: moment.utc(value).toDate()
+          }
+          break
+        case Sequelize.DATEONLY:
+          value = moment.utc(value).startOf('day').toDate()
+          condition[column] = {
+            [Sequelize.Op.lte]: moment.utc(value).toDate()
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.lte]: value
           }
           break
       }
