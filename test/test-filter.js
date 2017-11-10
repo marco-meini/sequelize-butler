@@ -321,6 +321,17 @@ describe('Filter', () => {
     })
   })
 
+  describe('Sequelize Condition', () => {
+    it('Add Op.overlap - sqlite', () => {
+      let filter = new Filter(postgresSupport.sequelize)
+      filter.addSequelizeCondition({
+        column1: { [Sequelize.Op.overlap]: [1, 2] }
+      })
+      let where = filter.getWhere()
+      expect(postgresSupport.getSql('table', {where: where})).to.contain(' ("table"."column1" && ARRAY[1,2])')
+    })
+  })
+
   describe('Annidate Filters', () => {
     it('Annidate or-block of conditions - sqlite', () => {
       let filter = new Filter(sqliteSupport.sequelize)
