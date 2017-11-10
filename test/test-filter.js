@@ -198,6 +198,100 @@ describe('Filter', () => {
     })
   })
 
+  describe('Between', () => {
+    it('Integer', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addBetween('column1', 1, 2)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain('(`table`.`column1` BETWEEN 1 AND 2)')
+            break
+          case 'mysql':
+            expect(sql).to.contain('(`table`.`column1` BETWEEN 1 AND 2)')
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" BETWEEN 1 AND 2)')
+            break
+          case 'mssql':
+            expect(sql).to.contain('([table].[column1] BETWEEN 1 AND 2)')
+            break
+        }
+      })
+    })
+
+    it('Datetime', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addBetween('column1', '2017-01-01 18:00', '2017-01-01 19:00', Sequelize.DATE)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` BETWEEN '2017-01-01 18:00:00.000 +00:00' AND '2017-01-01 19:00:00.000 +00:00')")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` BETWEEN '2017-01-01 18:00:00' AND '2017-01-01 19:00:00')")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" BETWEEN \'2017-01-01 18:00:00.000 +00:00\' AND \'2017-01-01 19:00:00.000 +00:00\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] BETWEEN '2017-01-01 18:00:00.000 +00:00' AND '2017-01-01 19:00:00.000 +00:00')")
+            break
+        }
+      })
+    })
+
+    it('Date', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addBetween('column1', '2017-01-01 18:00', '2017-01-02 19:00', Sequelize.DATEONLY)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` BETWEEN '2017-01-01 00:00:00.000 +00:00' AND '2017-01-02 00:00:00.000 +00:00')")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` BETWEEN '2017-01-01 00:00:00' AND '2017-01-02 00:00:00')")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" BETWEEN \'2017-01-01 00:00:00.000 +00:00\' AND \'2017-01-02 00:00:00.000 +00:00\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] BETWEEN '2017-01-01 00:00:00.000 +00:00' AND '2017-01-02 00:00:00.000 +00:00')")
+            break
+        }
+      })
+    })
+
+    it('NOT Date', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addNotBetween('column1', '2017-01-01 18:00', '2017-01-02 19:00', Sequelize.DATEONLY)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` NOT BETWEEN '2017-01-01 00:00:00.000 +00:00' AND '2017-01-02 00:00:00.000 +00:00')")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` NOT BETWEEN '2017-01-01 00:00:00' AND '2017-01-02 00:00:00')")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" NOT BETWEEN \'2017-01-01 00:00:00.000 +00:00\' AND \'2017-01-02 00:00:00.000 +00:00\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] NOT BETWEEN '2017-01-01 00:00:00.000 +00:00' AND '2017-01-02 00:00:00.000 +00:00')")
+            break
+        }
+      })
+    })
+  })
+
   describe('Greater', () => {
     it('To Date', () => {
       supports.forEach((support) => {
@@ -240,6 +334,54 @@ describe('Filter', () => {
             break
           case 'mssql':
             expect(sql).to.contain("([table].[column1] >= '2017-01-01 00:00:00.000 +00:00')")
+            break
+        }
+      })
+    })
+  })
+
+  describe('Less', () => {
+    it('To Date', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addLessTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` < '2017-01-01 00:00:00.000 +00:00')")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` < '2017-01-01 00:00:00')")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" < \'2017-01-01 00:00:00.000 +00:00\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] < '2017-01-01 00:00:00.000 +00:00')")
+            break
+        }
+      })
+    })
+
+    it('Equal To Date', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addLessEqualTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` <= '2017-01-01 00:00:00.000 +00:00')")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` <= '2017-01-01 00:00:00')")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" <= \'2017-01-01 00:00:00.000 +00:00\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] <= '2017-01-01 00:00:00.000 +00:00')")
             break
         }
       })

@@ -201,6 +201,58 @@ const Filter = function (connection) {
     }
   }
 
+  this.addBetween = (column, from, to, type) => {
+    if (column && from && to && typeof (from) === typeof (to)) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.between]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+          }
+          break
+        case Sequelize.DATEONLY:
+          from = moment.utc(from).startOf('day').toDate()
+          to = moment.utc(to).startOf('day').toDate()
+          condition[column] = {
+            [Sequelize.Op.between]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.between]: [from, to]
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
+  this.addNotBetween = (column, from, to, type) => {
+    if (column && from && to && typeof (from) === typeof (to)) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          condition[column] = {
+            [Sequelize.Op.notBetween]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+          }
+          break
+        case Sequelize.DATEONLY:
+          from = moment.utc(from).startOf('day').toDate()
+          to = moment.utc(to).startOf('day').toDate()
+          condition[column] = {
+            [Sequelize.Op.notBetween]: [moment.utc(from).toDate(), moment.utc(to).toDate()]
+          }
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.notBetween]: [from, to]
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
   this.addSequelizeCondition = (condition) => {
     conditions.push(condition)
   }
