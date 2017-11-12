@@ -1,5 +1,5 @@
 {
-  "name": "sequelize-helper",
+  "name": "sequelize-butler",
   "version": "1.0.0",
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marco-meini/sequelize-helper.git"
+    "url": "git+https://github.com/marco-meini/sequelize-butler.git"
   },
   "keywords": [
     "Sequelize",
