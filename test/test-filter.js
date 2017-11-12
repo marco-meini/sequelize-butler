@@ -561,27 +561,27 @@ describe('Filter', () => {
       })
     })
 
-  // it('NOT Date', () => {
-  //   supports.forEach((support) => {
-  //     let filter = new Filter(support.sequelize)
-  //     filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
-  //     let where = filter.getWhere()
-  //     let sql = support.getSql('table', {where: where})
-  //     switch (support.sequelize.getDialect()) {
-  //       case 'sqlite':
-  //         expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
-  //         break
-  //       case 'mysql':
-  //         expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
-  //         break
-  //       case 'postgres':
-  //         expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
-  //         break
-  //       case 'mssql':
-  //         expect(sql).to.contain("(CAST(N'column1' AS DATE) != N'2017-01-01T00:00:00')")
-  //         break
-  //     }
-  //   })
-  // })
+    it('NOT Date', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addNotIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATEONLY)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', {where: where})
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(CAST('column1' AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(CAST('column1' AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            break
+          case 'postgres':
+            expect(sql).to.contain("(CAST('column1' AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            break
+          case 'mssql':
+            expect(sql).to.contain("(CAST(N'column1' AS DATE) NOT IN (N'2017-01-01T00:00:00.000', N'2017-01-02T00:00:00.000'))")
+            break
+        }
+      })
+    })
   })
 })

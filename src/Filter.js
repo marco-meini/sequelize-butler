@@ -266,6 +266,35 @@ const Filter = function (connection) {
     }
   }
 
+  this.addNotIn = (column, values, type) => {
+    if (column && values && values.length) {
+      let condition = {}
+      switch (type) {
+        case Sequelize.DATE:
+          let cast = connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME'
+          condition = Sequelize.where(Sequelize.cast(column, cast), {
+            [Sequelize.Op.notIn]: values.map((value) => {
+              return moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0'))
+            })
+          })
+          break
+        case Sequelize.DATEONLY:
+          condition = Sequelize.where(Sequelize.cast(column, 'DATE'), {
+            [Sequelize.Op.notIn]: values.map((value) => {
+              return moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', milliseconds, '0'))
+            })
+          })
+          break
+        default:
+          condition[column] = {
+            [Sequelize.Op.in]: values
+          }
+          break
+      }
+      conditions.push(condition)
+    }
+  }
+
   this.addSequelizeCondition = (condition) => {
     conditions.push(condition)
   }
