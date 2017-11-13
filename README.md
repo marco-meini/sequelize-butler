@@ -1,5 +1,13 @@
 # sequelize-butler
+[![npm](https://img.shields.io/npm/v/sequelize-butler.svg)](https://www.npmjs.com/package/sequelize-butler)
+
 Useful features to facilitate the use of Sequelize
+
+## Install
+
+```
+npm i sequelize-butler
+```
 
 ## Filter
 Tool to write where conditions for sequelize more easily
