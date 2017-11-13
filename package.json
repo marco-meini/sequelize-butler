@@ -4,7 +4,8 @@
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w"
+    "test": "mocha -w",
+    "test-build": "mocha"
   },
   "directories": {
     "test": "test"
