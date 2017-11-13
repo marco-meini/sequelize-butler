@@ -469,22 +469,22 @@ describe('Filter', () => {
         filter.addLike(['column1'], 'test')
         let orBlock = new Filter(support.sequelize)
         orBlock.addEqual('column2', 'abc')
-        orBlock.addEqual('column3', 5)
+        orBlock.addEqual('column3', '2017-11-01', Sequelize.DATEONLY)
         filter.addSequelizeCondition(orBlock.getWhereUsingOr())
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR `table`.`column3` = 5))")
+            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR CAST('column3' AS DATE) = '2017-11-01T00:00:00'))")
             break
           case 'mysql':
-            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR `table`.`column3` = 5))")
+            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR CAST('column3' AS DATE) = '2017-11-01T00:00:00'))")
             break
           case 'postgres':
-            expect(sql).to.contain('(("table"."column1" ILIKE \'%test%\') AND ("table"."column2" = \'abc\' OR "table"."column3" = 5))')
+            expect(sql).to.contain('(("table"."column1" ILIKE \'%test%\') AND ("table"."column2" = \'abc\' OR CAST(\'column3\' AS DATE) = \'2017-11-01T00:00:00\'))')
             break
           case 'mssql':
-            expect(sql).to.contain("(([table].[column1] LIKE N'%test%') AND ([table].[column2] = N'abc' OR [table].[column3] = 5))")
+            expect(sql).to.contain("(([table].[column1] LIKE N'%test%') AND ([table].[column2] = N'abc' OR CAST(N'column3' AS DATE) = N'2017-11-01T00:00:00'))")
             break
         }
       })
