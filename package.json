@@ -11,17 +11,20 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
-    "sequelize": "^4.22.5"
+    "sequelize": "^4.22.5",
+    "moment": "^2.19.1"
   },
   "devDependencies": {
+    "@types/sequelize": "^4.0.79",
+    "@types/lodash": "^4.14.85",
+    "@types/moment": "^2.13.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "mocha": "^4.0.1",
     "sqlite3": "^3.1.13",
     "mysql2": "^1.4.2",
     "pg": "^7.4.0",
-    "tedious": "^2.1.1",
-    "moment": "^2.19.1"
+    "tedious": "^2.1.1"
   },
   "repository": {
     "type": "git",
