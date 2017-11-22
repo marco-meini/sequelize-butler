@@ -1,6 +1,6 @@
 module.exports = {
-  Error: require('./src/Error'),
-  Filter: require('./src/Filter'),
-  Map: require('./src/Map'),
-  Order: require('./src/Order')
+  Error: require('./dist/Error').SqError,
+  Filter: require('./dist/Filter').Filter,
+  Map: require('./dist/Map').Map,
+  Order: require('./dist/Order').Order
 }

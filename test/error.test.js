@@ -1,7 +1,7 @@
 'use strict'
 /* global describe, it */
 
-const SqError = require('../src/Error')
+const SqError = require('../dist/Error').SqError
 const Support = require('./support')
 const chai = require('chai')
 const expect = chai.expect

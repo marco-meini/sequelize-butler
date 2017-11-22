@@ -1,11 +1,7 @@
-'use strict'
-/* global describe, it */
-
-const Filter = require('../src/Filter')
+import { SequelizeButler } from '../main';
+import { expect } from 'chai';
+import * as Sequelize from 'sequelize';
 const Support = require('./support')
-const chai = require('chai')
-const Sequelize = require('sequelize')
-const expect = chai.expect
 
 describe('Filter', () => {
   let supports = [new Support('mysql'), new Support('sqlite'), new Support('postgres'), new Support('mssql')]
@@ -13,7 +9,7 @@ describe('Filter', () => {
   describe('Like', () => {
     it('Add like', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addLike(['column1', 'column2'], 'abc')
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -36,7 +32,7 @@ describe('Filter', () => {
 
     it('Add Not like', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotLike(['column1', 'column2'], 'abc')
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -61,7 +57,7 @@ describe('Filter', () => {
   describe('Equal', () => {
     it('Integer', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', 10)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -84,7 +80,7 @@ describe('Filter', () => {
 
     it('Boolean', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', true)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -107,7 +103,7 @@ describe('Filter', () => {
 
     it('Datetime', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATE)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -130,7 +126,7 @@ describe('Filter', () => {
 
     it('Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -153,7 +149,7 @@ describe('Filter', () => {
 
     it('NOT boolean', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotEqual('column1', true, Sequelize.BOOLEAN)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -176,7 +172,7 @@ describe('Filter', () => {
 
     it('NOT Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -201,7 +197,7 @@ describe('Filter', () => {
   describe('Between', () => {
     it('Integer', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addBetween('column1', 1, 2)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -224,7 +220,7 @@ describe('Filter', () => {
 
     it('Datetime', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addBetween('column1', '2017-01-01 18:00', '2017-01-01 19:00', Sequelize.DATE)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -247,7 +243,7 @@ describe('Filter', () => {
 
     it('Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addBetween('column1', '2017-01-01 18:00', '2017-01-02 19:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -270,7 +266,7 @@ describe('Filter', () => {
 
     it('NOT Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotBetween('column1', '2017-01-01 18:00', '2017-01-02 19:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -295,7 +291,7 @@ describe('Filter', () => {
   describe('Greater', () => {
     it('To Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addGreaterTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -318,7 +314,7 @@ describe('Filter', () => {
 
     it('Equal To Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addGreaterEqualTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -343,7 +339,7 @@ describe('Filter', () => {
   describe('Less', () => {
     it('To Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addLessTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -366,7 +362,7 @@ describe('Filter', () => {
 
     it('Equal To Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addLessEqualTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -391,7 +387,7 @@ describe('Filter', () => {
   describe('Where', () => {
     it('Get where', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', 1)
         filter.addEqual('column2', 'test')
         let where = filter.getWhere()
@@ -415,7 +411,7 @@ describe('Filter', () => {
 
     it('Get where using or', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', 1)
         filter.addEqual('column2', 'test')
         let where = filter.getWhereUsingOr()
@@ -441,7 +437,7 @@ describe('Filter', () => {
   describe('Sequelize Condition', () => {
     it('Sequelize.Op.overlap', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addSequelizeCondition({
           column1: { [Sequelize.Op.overlap]: [1, 2] }
         })
@@ -465,9 +461,9 @@ describe('Filter', () => {
   describe('Annidate Filters', () => {
     it('Annidate or-block of conditions', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addLike(['column1'], 'test')
-        let orBlock = new Filter(support.sequelize)
+        let orBlock = new SequelizeButler.Filter(support.sequelize)
         orBlock.addEqual('column2', 'abc')
         orBlock.addEqual('column3', '2017-11-01', Sequelize.DATEONLY)
         filter.addSequelizeCondition(orBlock.getWhereUsingOr())
@@ -494,7 +490,7 @@ describe('Filter', () => {
   describe('In', () => {
     it('Integer', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addIn('column1', [1, 2])
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -517,7 +513,7 @@ describe('Filter', () => {
 
     it('Datetime', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATE)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -540,7 +536,7 @@ describe('Filter', () => {
 
     it('Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
@@ -563,7 +559,7 @@ describe('Filter', () => {
 
     it('NOT Date', () => {
       supports.forEach((support) => {
-        let filter = new Filter(support.sequelize)
+        let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATEONLY)
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
