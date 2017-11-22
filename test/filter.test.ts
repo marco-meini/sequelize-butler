@@ -1,4 +1,4 @@
-import { SequelizeButler } from '../main';
+import *  as SequelizeButler from '../';
 import { expect } from 'chai';
 import * as Sequelize from 'sequelize';
 const Support = require('./support')

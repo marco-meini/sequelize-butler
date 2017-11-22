@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
-  "types": "main.ts",
+  "types": "main.d.ts",
   "scripts": {
     "build": "npm run build-ts && npm run tslint",
     "build-ts": "tsc",
