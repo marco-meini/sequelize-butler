@@ -1,7 +1,7 @@
 'use strict'
 /* global describe, it */
 
-const Map = require('../src/Map')
+const Map = require('../dist/Map').Map
 const chai = require('chai')
 const expect = chai.expect
 

@@ -27,21 +27,21 @@ export class SqError {
     this.error = error;
   }
 
-  isValidationError() { 
+  isValidationError() {
     if (this.error.name === 'SequelizeValidationError') {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
-  getResults(globalErrorMessage) {
+  getResults(globalErrorMessage: string) {
     if (this.isValidationError()) {
-      let _result = new Result(false, globalErrorMessage)
-      this.error.errors.forEach((item) => {
-        _result.subresults.push(new SubResult(false, item.message))
-      })
-      return _result
+      let result = new Result(false, globalErrorMessage);
+      this.error.errors.forEach((item: any) => {
+        result.subresults.push(new SubResult(false, item.message));
+      });
+      return result;
     }
-    return null
+    return null;
   }
 }

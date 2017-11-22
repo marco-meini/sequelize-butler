@@ -1,7 +1,7 @@
 'use strict'
 /* global describe, it */
 
-const Order = require('../src/Order')
+const Order = require('../dist/Order').Order
 const chai = require('chai')
 const expect = chai.expect
 
