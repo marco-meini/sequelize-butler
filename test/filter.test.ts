@@ -109,16 +109,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATETIME) = '2017-01-01T18:00:00')")
+            expect(sql).to.contain("(CAST(`column1` AS DATETIME) = '2017-01-01T18:00:00')")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATETIME) = '2017-01-01T18:00:00')")
+            expect(sql).to.contain("(CAST(`column1` AS DATETIME) = '2017-01-01T18:00:00')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS TIMESTAMP(0)) = '2017-01-01T18:00:00')")
+            expect(sql).to.contain("(CAST(\"column1\" AS TIMESTAMP(0)) = '2017-01-01T18:00:00')")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATETIME) = N'2017-01-01T18:00:00')")
+            expect(sql).to.contain("(CAST([column1] AS DATETIME) = N'2017-01-01T18:00:00')")
             break
         }
       })
@@ -132,16 +132,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) = '2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) = '2017-01-01T00:00:00')")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) = '2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) = '2017-01-01T00:00:00')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) = '2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) = '2017-01-01T00:00:00')")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) = N'2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST([column1] AS DATE) = N'2017-01-01T00:00:00')")
             break
         }
       })
@@ -178,16 +178,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) != '2017-01-01T00:00:00')")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) != '2017-01-01T00:00:00')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) != '2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) != '2017-01-01T00:00:00')")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) != N'2017-01-01T00:00:00')")
+            expect(sql).to.contain("(CAST([column1] AS DATE) != N'2017-01-01T00:00:00')")
             break
         }
       })
@@ -297,16 +297,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) > '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) > '2017-01-01T00:00:00.00000')")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) > '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) > '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) > '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) > '2017-01-01T00:00:00.00000')")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) > N'2017-01-01T00:00:00.000')")
+            expect(sql).to.contain("(CAST([column1] AS DATE) > N'2017-01-01T00:00:00.000')")
             break
         }
       })
@@ -320,16 +320,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) >= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) >= '2017-01-01T00:00:00.00000')")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) >= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) >= '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) >= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) >= '2017-01-01T00:00:00.00000')")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) >= N'2017-01-01T00:00:00.000')")
+            expect(sql).to.contain("(CAST([column1] AS DATE) >= N'2017-01-01T00:00:00.000')")
             break
         }
       })
@@ -345,16 +345,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) < '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) < '2017-01-01T00:00:00.00000')")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) < '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) < '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) < '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) < '2017-01-01T00:00:00.00000')")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) < N'2017-01-01T00:00:00.000')")
+            expect(sql).to.contain("(CAST([column1] AS DATE) < N'2017-01-01T00:00:00.000')")
             break
         }
       })
@@ -368,16 +368,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) <= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) <= '2017-01-01T00:00:00.00000')")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) <= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) <= '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) <= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) <= '2017-01-01T00:00:00.00000')")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) <= N'2017-01-01T00:00:00.000')")
+            expect(sql).to.contain("(CAST([column1] AS DATE) <= N'2017-01-01T00:00:00.000')")
             break
         }
       })
@@ -471,16 +471,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR CAST('column3' AS DATE) = '2017-11-01T00:00:00'))")
+            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR CAST(`column3` AS DATE) = '2017-11-01T00:00:00'))")
             break
           case 'mysql':
-            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR CAST('column3' AS DATE) = '2017-11-01T00:00:00'))")
+            expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR CAST(`column3` AS DATE) = '2017-11-01T00:00:00'))")
             break
           case 'postgres':
-            expect(sql).to.contain('(("table"."column1" ILIKE \'%test%\') AND ("table"."column2" = \'abc\' OR CAST(\'column3\' AS DATE) = \'2017-11-01T00:00:00\'))')
+            expect(sql).to.contain('(("table"."column1" ILIKE \'%test%\') AND ("table"."column2" = \'abc\' OR CAST("column3" AS DATE) = \'2017-11-01T00:00:00\'))')
             break
           case 'mssql':
-            expect(sql).to.contain("(([table].[column1] LIKE N'%test%') AND ([table].[column2] = N'abc' OR CAST(N'column3' AS DATE) = N'2017-11-01T00:00:00'))")
+            expect(sql).to.contain("(([table].[column1] LIKE N'%test%') AND ([table].[column2] = N'abc' OR CAST([column3] AS DATE) = N'2017-11-01T00:00:00'))")
             break
         }
       })
@@ -519,16 +519,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATETIME) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
+            expect(sql).to.contain("(CAST(`column1` AS DATETIME) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATETIME) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
+            expect(sql).to.contain("(CAST(`column1` AS DATETIME) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS TIMESTAMP(0)) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
+            expect(sql).to.contain("(CAST(\"column1\" AS TIMESTAMP(0)) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATETIME) IN (N'2017-01-01T18:00:00.000', N'2017-01-02T18:00:00.000'))")
+            expect(sql).to.contain("(CAST([column1] AS DATETIME) IN (N'2017-01-01T18:00:00.000', N'2017-01-02T18:00:00.000'))")
             break
         }
       })
@@ -542,16 +542,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) IN (N'2017-01-01T00:00:00.000', N'2017-01-02T00:00:00.000'))")
+            expect(sql).to.contain("(CAST([column1] AS DATE) IN (N'2017-01-01T00:00:00.000', N'2017-01-02T00:00:00.000'))")
             break
         }
       })
@@ -565,16 +565,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(CAST('column1' AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'mysql':
-            expect(sql).to.contain("(CAST('column1' AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain("(CAST(`column1` AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST('column1' AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain("(CAST(\"column1\" AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'mssql':
-            expect(sql).to.contain("(CAST(N'column1' AS DATE) NOT IN (N'2017-01-01T00:00:00.000', N'2017-01-02T00:00:00.000'))")
+            expect(sql).to.contain("(CAST([column1] AS DATE) NOT IN (N'2017-01-01T00:00:00.000', N'2017-01-02T00:00:00.000'))")
             break
         }
       })

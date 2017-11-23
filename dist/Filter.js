@@ -55,10 +55,10 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), moment(value).format('YYYY-MM-DDTHH:mm:ss'));
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), moment(value).format('YYYY-MM-DDTHH:mm:ss'));
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss'));
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss'));
                     break;
                 default:
                     condition[column] = {
@@ -75,10 +75,10 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), { [Sequelize.Op.ne]: moment(value).format('YYYY-MM-DDTHH:mm:ss') });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), { [Sequelize.Op.ne]: moment(value).format('YYYY-MM-DDTHH:mm:ss') });
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), { [Sequelize.Op.ne]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss') });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), { [Sequelize.Op.ne]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss') });
                     break;
                 case Sequelize.BOOLEAN:
                     condition[column] = {
@@ -100,10 +100,10 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), { [Sequelize.Op.gt]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), { [Sequelize.Op.gt]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), { [Sequelize.Op.gt]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), { [Sequelize.Op.gt]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 default:
                     condition[column] = {
@@ -120,10 +120,10 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), { [Sequelize.Op.gte]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), { [Sequelize.Op.gte]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), { [Sequelize.Op.gte]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), { [Sequelize.Op.gte]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 default:
                     condition[column] = {
@@ -140,10 +140,10 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), { [Sequelize.Op.lt]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), { [Sequelize.Op.lt]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), { [Sequelize.Op.lt]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), { [Sequelize.Op.lt]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 default:
                     condition[column] = {
@@ -160,10 +160,10 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), { [Sequelize.Op.lte]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), { [Sequelize.Op.lte]: moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), { [Sequelize.Op.lte]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), { [Sequelize.Op.lte]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0')) });
                     break;
                 default:
                     condition[column] = {
@@ -236,14 +236,14 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), {
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), {
                         [Sequelize.Op.in]: values.map((value) => {
                             return moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0'));
                         })
                     });
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), {
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), {
                         [Sequelize.Op.in]: values.map((value) => {
                             return moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0'));
                         })
@@ -264,14 +264,14 @@ class Filter {
             switch (type) {
                 case Sequelize.DATE:
                     let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-                    condition = Sequelize.where(Sequelize.cast(column, cast), {
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), {
                         [Sequelize.Op.notIn]: values.map((value) => {
                             return moment(value).format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0'));
                         })
                     });
                     break;
                 case Sequelize.DATEONLY:
-                    condition = Sequelize.where(Sequelize.cast(column, 'DATE'), {
+                    condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), {
                         [Sequelize.Op.notIn]: values.map((value) => {
                             return moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss.' + _.padEnd('', this.milliseconds, '0'));
                         })
