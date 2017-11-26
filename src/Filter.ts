@@ -51,47 +51,59 @@ export class Filter {
   }
 
   addEqual(column: string, value: any, type?: Sequelize.DataTypeAbstract) {
-    if (column && value) {
+    if (column) {
       let condition: any = {};
-      switch (type) {
-        case Sequelize.DATE:
-          let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-          condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), moment(value).format('YYYY-MM-DDTHH:mm:ss'));
-          break;
-        case Sequelize.DATEONLY:
-          condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss'));
-          break;
-        default:
-          condition[column] = {
-            [Sequelize.Op.eq]: value
-          };
-          break;
+      if (!_.isNil(value)) {
+        switch (type) {
+          case Sequelize.DATE:
+            let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
+            condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), moment(value).format('YYYY-MM-DDTHH:mm:ss'));
+            break;
+          case Sequelize.DATEONLY:
+            condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss'));
+            break;
+          default:
+            condition[column] = {
+              [Sequelize.Op.eq]: value
+            };
+            break;
+        }
+      } else {
+        condition[column] = {
+          [Sequelize.Op.eq]: null
+        };
       }
       this.conditions.push(condition);
     }
   }
 
   addNotEqual(column: string, value: any, type?: Sequelize.DataTypeAbstract) {
-    if (column && value) {
+    if (column) {
       let condition: any = {};
-      switch (type) {
-        case Sequelize.DATE:
-          let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
-          condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), { [Sequelize.Op.ne]: moment(value).format('YYYY-MM-DDTHH:mm:ss') });
-          break;
-        case Sequelize.DATEONLY:
-          condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), { [Sequelize.Op.ne]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss') });
-          break;
-        case Sequelize.BOOLEAN:
-          condition[column] = {
-            [Sequelize.Op.not]: value
-          };
-          break;
-        default:
-          condition[column] = {
-            [Sequelize.Op.ne]: value
-          };
-          break;
+      if (!_.isNil(value)) {
+        switch (type) {
+          case Sequelize.DATE:
+            let cast = this.connection.getDialect() === 'postgres' ? 'timestamp(0)' : 'DATETIME';
+            condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), cast), { [Sequelize.Op.ne]: moment(value).format('YYYY-MM-DDTHH:mm:ss') });
+            break;
+          case Sequelize.DATEONLY:
+            condition = Sequelize.where(Sequelize.cast(Sequelize.col(column), 'DATE'), { [Sequelize.Op.ne]: moment(value).startOf('day').format('YYYY-MM-DDTHH:mm:ss') });
+            break;
+          case Sequelize.BOOLEAN:
+            condition[column] = {
+              [Sequelize.Op.not]: value
+            };
+            break;
+          default:
+            condition[column] = {
+              [Sequelize.Op.ne]: value
+            };
+            break;
+        }
+      } else {
+        condition[column] = {
+          [Sequelize.Op.ne]: null
+        };
       }
       this.conditions.push(condition);
     }

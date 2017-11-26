@@ -12,7 +12,9 @@
   },
   "jest": {
     "globals": {
-      "__TS_CONFIG__": "tsconfig.json"
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
     },
     "moduleFileExtensions": [
       "ts",

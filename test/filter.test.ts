@@ -12,7 +12,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addLike(['column1', 'column2'], 'abc')
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(`table`.`column1` LIKE '%abc%' OR `table`.`column2` LIKE '%abc%')")
@@ -35,7 +35,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotLike(['column1', 'column2'], 'abc')
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(`table`.`column1` NOT LIKE '%abc%' AND `table`.`column2` NOT LIKE '%abc%')")
@@ -60,7 +60,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', 10)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain('(`table`.`column1` = 10)')
@@ -78,12 +78,35 @@ describe('Filter', () => {
       })
     })
 
+    it('String empty', () => {
+      supports.forEach((support) => {
+        let filter = new SequelizeButler.Filter(support.sequelize)
+        filter.addEqual('column1', '')
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain('(`table`.`column1` = \'\')')
+            break
+          case 'mysql':
+            expect(sql).to.contain('(`table`.`column1` = \'\')')
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" = \'\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain('([table].[column1] = N\'\')')
+            break
+        }
+      })
+    })
+
     it('Boolean', () => {
       supports.forEach((support) => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', true)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain('(`table`.`column1` = 1)')
@@ -106,7 +129,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATE)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATETIME) = '2017-01-01T18:00:00')")
@@ -129,7 +152,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) = '2017-01-01T00:00:00')")
@@ -147,12 +170,35 @@ describe('Filter', () => {
       })
     })
 
+    it('NOT String empty', () => {
+      supports.forEach((support) => {
+        let filter = new SequelizeButler.Filter(support.sequelize)
+        filter.addNotEqual('column1', '')
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain('(`table`.`column1` != \'\')')
+            break
+          case 'mysql':
+            expect(sql).to.contain('(`table`.`column1` != \'\')')
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" != \'\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain('([table].[column1] != N\'\')')
+            break
+        }
+      })
+    })
+
     it('NOT boolean', () => {
       supports.forEach((support) => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotEqual('column1', true, Sequelize.BOOLEAN)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain('(`table`.`column1` IS NOT 1)')
@@ -175,7 +221,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotEqual('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) != '2017-01-01T00:00:00')")
@@ -192,6 +238,52 @@ describe('Filter', () => {
         }
       })
     })
+
+    it('Is null', () => {
+      supports.forEach((support) => {
+        let filter = new SequelizeButler.Filter(support.sequelize)
+        filter.addEqual('column1', null)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` IS NULL)")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` IS NULL)")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" IS NULL)')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] IS NULL)")
+            break
+        }
+      })
+    })
+
+    it('Is not null', () => {
+      supports.forEach((support) => {
+        let filter = new SequelizeButler.Filter(support.sequelize)
+        filter.addNotEqual('column1', null)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` IS NOT NULL)")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` IS NOT NULL)")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" IS NOT NULL)')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] IS NOT NULL)")
+            break
+        }
+      })
+    })
   })
 
   describe('Between', () => {
@@ -200,7 +292,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addBetween('column1', 1, 2)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain('(`table`.`column1` BETWEEN 1 AND 2)')
@@ -223,7 +315,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addBetween('column1', '2017-01-01 18:00', '2017-01-01 19:00', Sequelize.DATE)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(`table`.`column1` BETWEEN '2017-01-01T18:00:00.00000' AND '2017-01-01T19:00:00.99999')")
@@ -246,7 +338,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addBetween('column1', '2017-01-01 18:00', '2017-01-02 19:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(`table`.`column1` BETWEEN '2017-01-01T00:00:00.00000' AND '2017-01-02T23:59:59.99999')")
@@ -269,7 +361,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotBetween('column1', '2017-01-01 18:00', '2017-01-02 19:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(`table`.`column1` NOT BETWEEN '2017-01-01T00:00:00.00000' AND '2017-01-02T23:59:59.99999')")
@@ -294,7 +386,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addGreaterTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) > '2017-01-01T00:00:00.00000')")
@@ -317,7 +409,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addGreaterEqualTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) >= '2017-01-01T00:00:00.00000')")
@@ -342,7 +434,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addLessTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) < '2017-01-01T00:00:00.00000')")
@@ -365,7 +457,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addLessEqualTo('column1', '2017-01-01 18:00', Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) <= '2017-01-01T00:00:00.00000')")
@@ -391,7 +483,7 @@ describe('Filter', () => {
         filter.addEqual('column1', 1)
         filter.addEqual('column2', 'test')
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(`table`.`column1` = 1 AND `table`.`column2` = 'test')")
@@ -415,7 +507,7 @@ describe('Filter', () => {
         filter.addEqual('column1', 1)
         filter.addEqual('column2', 'test')
         let where = filter.getWhereUsingOr()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(`table`.`column1` = 1 OR `table`.`column2` = 'test')")
@@ -442,7 +534,7 @@ describe('Filter', () => {
           column1: { [Sequelize.Op.overlap]: [1, 2] }
         })
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             break
@@ -468,7 +560,7 @@ describe('Filter', () => {
         orBlock.addEqual('column3', '2017-11-01', Sequelize.DATEONLY)
         filter.addSequelizeCondition(orBlock.getWhereUsingOr())
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("((`table`.`column1` LIKE '%test%') AND (`table`.`column2` = 'abc' OR CAST(`column3` AS DATE) = '2017-11-01T00:00:00'))")
@@ -493,7 +585,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addIn('column1', [1, 2])
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain('(`table`.`column1` IN (1, 2))')
@@ -516,7 +608,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATE)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATETIME) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
@@ -539,7 +631,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
@@ -562,7 +654,7 @@ describe('Filter', () => {
         let filter = new SequelizeButler.Filter(support.sequelize)
         filter.addNotIn('column1', ['2017-01-01 18:00', '2017-01-02 18:00'], Sequelize.DATEONLY)
         let where = filter.getWhere()
-        let sql = support.getSql('table', {where: where})
+        let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
             expect(sql).to.contain("(CAST(`column1` AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")

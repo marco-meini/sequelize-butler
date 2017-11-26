@@ -64,7 +64,7 @@ SQL output (PG in this example):
 ```
 
 #### addEqual
-Adds an equal condition to one column, for dates you must specify the type
+Adds an equal condition to one column, for dates you must specify the type, if value is null or undefined an "IS NULL" condition is added
 
 ##### Arguments
 - column: column to compare 
@@ -84,7 +84,7 @@ SQL output (PG in this example):
 ```
 
 #### addNotEqual
-Add a not-equal condition to one column, for dates you must specify the type
+Add a not-equal condition to one column, for dates you must specify the type, if value is null or undefined an "IS NOT NULL" condition is added
 
 ##### Arguments
 - column: column to compare 

@@ -82,6 +82,29 @@ describe('Filter', () => {
       })
     })
 
+    it('String empty', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addEqual('column1', '')
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain('(`table`.`column1` = \'\')')
+            break
+          case 'mysql':
+            expect(sql).to.contain('(`table`.`column1` = \'\')')
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" = \'\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain('([table].[column1] = N\'\')')
+            break
+        }
+      })
+    })
+
     it('Boolean', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
@@ -151,6 +174,29 @@ describe('Filter', () => {
       })
     })
 
+    it('NOT String empty', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addNotEqual('column1', '')
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain('(`table`.`column1` != \'\')')
+            break
+          case 'mysql':
+            expect(sql).to.contain('(`table`.`column1` != \'\')')
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" != \'\')')
+            break
+          case 'mssql':
+            expect(sql).to.contain('([table].[column1] != N\'\')')
+            break
+        }
+      })
+    })
+
     it('NOT boolean', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
@@ -192,6 +238,52 @@ describe('Filter', () => {
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) != N'2017-01-01T00:00:00')")
+            break
+        }
+      })
+    })
+
+    it('Is null', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addEqual('column1', null)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` IS NULL)")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` IS NULL)")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" IS NULL)')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] IS NULL)")
+            break
+        }
+      })
+    })
+
+    it('Is not null', () => {
+      supports.forEach((support) => {
+        let filter = new Filter(support.sequelize)
+        filter.addNotEqual('column1', null)
+        let where = filter.getWhere()
+        let sql = support.getSql('table', { where: where })
+        switch (support.sequelize.getDialect()) {
+          case 'sqlite':
+            expect(sql).to.contain("(`table`.`column1` IS NOT NULL)")
+            break
+          case 'mysql':
+            expect(sql).to.contain("(`table`.`column1` IS NOT NULL)")
+            break
+          case 'postgres':
+            expect(sql).to.contain('("table"."column1" IS NOT NULL)')
+            break
+          case 'mssql':
+            expect(sql).to.contain("([table].[column1] IS NOT NULL)")
             break
         }
       })
