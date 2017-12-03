@@ -1,4 +1,4 @@
-import *  as SequelizeButler from '../';
+import { SequelizeError } from '../src/SequelizeError';
 import { expect } from 'chai';
 const Support = require('./support')
 
@@ -10,7 +10,7 @@ describe('Error', () => {
     }).then(() => {
       done(new Error('Creation must generate an error'))
     }).catch((error) => {
-      let sqError = new SequelizeButler.Error(error)
+      let sqError = new SequelizeError(error);
       if (sqError.isValidationError()) {
         let result = sqError.getResults('There are some errors')
         let _result = {

@@ -1,6 +1,5 @@
 module.exports = {
-  Error: require('./dist/Error').SqError,
+  Error: require('./dist/SequelizeError').SequelizeError,
   Filter: require('./dist/Filter').Filter,
-  Map: require('./dist/Map').Map,
   Order: require('./dist/Order').Order
 }
