@@ -1,5 +1,5 @@
 {
-  "name": "sequelize-butler",
+  "name": "sequelize-helper",
   "version": "2.0.1",
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
