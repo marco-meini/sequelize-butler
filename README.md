@@ -1,8 +1,4 @@
-# sequelize-butler
-[![npm](https://img.shields.io/npm/v/sequelize-butler.svg)](https://www.npmjs.com/package/sequelize-butler)
-[![npm](https://img.shields.io/npm/l/express.svg)]()
-[![npm](https://img.shields.io/npm/dm/sequelize-butler.svg)](https://www.npmjs.com/package/sequelize-butler)
-[![Build Status](https://travis-ci.org/marco-meini/sequelize-butler.svg?branch=master)](https://travis-ci.org/marco-meini/sequelize-butler)  
+# sequelize-helper
 
 Useful features to facilitate the use of Sequelize
 
