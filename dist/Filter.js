@@ -16,12 +16,12 @@ class Filter {
                 let condition = {};
                 if (this.connection.getDialect() === 'postgres') {
                     condition[column] = {
-                        [Sequelize.Op.iLike]: '%' + value + '%'
+                        [Sequelize.Op.iLike]: value
                     };
                 }
                 else {
                     condition[column] = {
-                        [Sequelize.Op.like]: '%' + value + '%'
+                        [Sequelize.Op.like]: value
                     };
                 }
                 likeConditions.push(condition);
@@ -36,12 +36,12 @@ class Filter {
                 let condition = {};
                 if (this.connection.getDialect() === 'postgres') {
                     condition[column] = {
-                        [Sequelize.Op.notILike]: '%' + value + '%'
+                        [Sequelize.Op.notILike]: value
                     };
                 }
                 else {
                     condition[column] = {
-                        [Sequelize.Op.notLike]: '%' + value + '%'
+                        [Sequelize.Op.notLike]: value
                     };
                 }
                 likeConditions.push(condition);

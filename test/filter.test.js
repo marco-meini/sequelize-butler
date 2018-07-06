@@ -14,7 +14,7 @@ describe('Filter', () => {
     it('Add like', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
-        filter.addLike(['column1', 'column2'], 'abc')
+        filter.addLike(['column1', 'column2'], '%abc%')
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
@@ -37,7 +37,7 @@ describe('Filter', () => {
     it('Add Not like', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
-        filter.addNotLike(['column1', 'column2'], 'abc')
+        filter.addNotLike(['column1', 'column2'], '%abc%')
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
@@ -558,7 +558,7 @@ describe('Filter', () => {
     it('Annidate or-block of conditions', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
-        filter.addLike(['column1'], 'test')
+        filter.addLike(['column1'], '%test%')
         let orBlock = new Filter(support.sequelize)
         orBlock.addEqual('column2', 'abc')
         orBlock.addEqual(`column3`, '2017-11-01', Sequelize.DATEONLY)
