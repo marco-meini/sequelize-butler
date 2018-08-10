@@ -252,7 +252,7 @@ export class Filter {
   }
 
   addIn(column: string, values: Array<any>, type?: Sequelize.DataTypeAbstract) {
-    if (column && values && values.length) {
+    if (column) {
       let condition: any = {};
       switch (type) {
         case Sequelize.DATE:
@@ -281,7 +281,7 @@ export class Filter {
   }
 
   addNotIn(column: string, values: Array<any>, type?: Sequelize.DataTypeAbstract) {
-    if (column && values && values.length) {
+    if (column) {
       let condition: any = {};
       switch (type) {
         case Sequelize.DATE:

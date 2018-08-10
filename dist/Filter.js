@@ -245,7 +245,7 @@ class Filter {
         }
     }
     addIn(column, values, type) {
-        if (column && values && values.length) {
+        if (column) {
             let condition = {};
             switch (type) {
                 case Sequelize.DATE:
@@ -273,7 +273,7 @@ class Filter {
         }
     }
     addNotIn(column, values, type) {
-        if (column && values && values.length) {
+        if (column) {
             let condition = {};
             switch (type) {
                 case Sequelize.DATE:
