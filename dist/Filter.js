@@ -293,7 +293,7 @@ class Filter {
                     break;
                 default:
                     condition[column] = {
-                        [Sequelize.Op.in]: values
+                        [Sequelize.Op.notIn]: values
                     };
                     break;
             }
