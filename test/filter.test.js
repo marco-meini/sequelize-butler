@@ -14,7 +14,7 @@ describe('Filter', () => {
     it('Add like', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
-        filter.addLike(['column1', 'column2'], 'abc')
+        filter.addLike(['column1', 'column2'], '%abc%')
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
@@ -37,7 +37,7 @@ describe('Filter', () => {
     it('Add Not like', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
-        filter.addNotLike(['column1', 'column2'], 'abc')
+        filter.addNotLike(['column1', 'column2'], '%abc%')
         let where = filter.getWhere()
         let sql = support.getSql('table', {where: where})
         switch (support.sequelize.getDialect()) {
@@ -90,16 +90,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain('(`table`.`column1` = \'\')')
+            expect(sql).to.contain("(`table`.`column1` = '')")
             break
           case 'mysql':
-            expect(sql).to.contain('(`table`.`column1` = \'\')')
+            expect(sql).to.contain("(`table`.`column1` = '')")
             break
           case 'postgres':
             expect(sql).to.contain('("table"."column1" = \'\')')
             break
           case 'mssql':
-            expect(sql).to.contain('([table].[column1] = N\'\')')
+            expect(sql).to.contain("([table].[column1] = N'')")
             break
         }
       })
@@ -142,7 +142,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATETIME) = '2017-01-01T18:00:00')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS TIMESTAMP(0)) = '2017-01-01T18:00:00')")
+            expect(sql).to.contain('(CAST("column1" AS TIMESTAMP(0)) = \'2017-01-01T18:00:00\')')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATETIME) = N'2017-01-01T18:00:00')")
@@ -165,7 +165,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) = '2017-01-01T00:00:00')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) = '2017-01-01T00:00:00')")
+            expect(sql).to.contain('(CAST("column1" AS DATE) = \'2017-01-01T00:00:00\')')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) = N'2017-01-01T00:00:00')")
@@ -182,16 +182,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain('(`table`.`column1` != \'\')')
+            expect(sql).to.contain("(`table`.`column1` != '')")
             break
           case 'mysql':
-            expect(sql).to.contain('(`table`.`column1` != \'\')')
+            expect(sql).to.contain("(`table`.`column1` != '')")
             break
           case 'postgres':
             expect(sql).to.contain('("table"."column1" != \'\')')
             break
           case 'mssql':
-            expect(sql).to.contain('([table].[column1] != N\'\')')
+            expect(sql).to.contain("([table].[column1] != N'')")
             break
         }
       })
@@ -234,7 +234,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) != '2017-01-01T00:00:00')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) != '2017-01-01T00:00:00')")
+            expect(sql).to.contain('(CAST("column1" AS DATE) != \'2017-01-01T00:00:00\')')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) != N'2017-01-01T00:00:00')")
@@ -251,16 +251,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(`table`.`column1` IS NULL)")
+            expect(sql).to.contain('(`table`.`column1` IS NULL)')
             break
           case 'mysql':
-            expect(sql).to.contain("(`table`.`column1` IS NULL)")
+            expect(sql).to.contain('(`table`.`column1` IS NULL)')
             break
           case 'postgres':
             expect(sql).to.contain('("table"."column1" IS NULL)')
             break
           case 'mssql':
-            expect(sql).to.contain("([table].[column1] IS NULL)")
+            expect(sql).to.contain('([table].[column1] IS NULL)')
             break
         }
       })
@@ -274,16 +274,16 @@ describe('Filter', () => {
         let sql = support.getSql('table', { where: where })
         switch (support.sequelize.getDialect()) {
           case 'sqlite':
-            expect(sql).to.contain("(`table`.`column1` IS NOT NULL)")
+            expect(sql).to.contain('(`table`.`column1` IS NOT NULL)')
             break
           case 'mysql':
-            expect(sql).to.contain("(`table`.`column1` IS NOT NULL)")
+            expect(sql).to.contain('(`table`.`column1` IS NOT NULL)')
             break
           case 'postgres':
             expect(sql).to.contain('("table"."column1" IS NOT NULL)')
             break
           case 'mssql':
-            expect(sql).to.contain("([table].[column1] IS NOT NULL)")
+            expect(sql).to.contain('([table].[column1] IS NOT NULL)')
             break
         }
       })
@@ -399,7 +399,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) > '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) > '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain('(CAST("column1" AS DATE) > \'2017-01-01T00:00:00.00000\')')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) > N'2017-01-01T00:00:00.000')")
@@ -422,7 +422,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) >= '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) >= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain('(CAST("column1" AS DATE) >= \'2017-01-01T00:00:00.00000\')')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) >= N'2017-01-01T00:00:00.000')")
@@ -447,7 +447,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) < '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) < '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain('(CAST("column1" AS DATE) < \'2017-01-01T00:00:00.00000\')')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) < N'2017-01-01T00:00:00.000')")
@@ -470,7 +470,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) <= '2017-01-01T00:00:00.00000')")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) <= '2017-01-01T00:00:00.00000')")
+            expect(sql).to.contain('(CAST("column1" AS DATE) <= \'2017-01-01T00:00:00.00000\')')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) <= N'2017-01-01T00:00:00.000')")
@@ -558,7 +558,7 @@ describe('Filter', () => {
     it('Annidate or-block of conditions', () => {
       supports.forEach((support) => {
         let filter = new Filter(support.sequelize)
-        filter.addLike(['column1'], 'test')
+        filter.addLike(['column1'], '%test%')
         let orBlock = new Filter(support.sequelize)
         orBlock.addEqual('column2', 'abc')
         orBlock.addEqual(`column3`, '2017-11-01', Sequelize.DATEONLY)
@@ -621,7 +621,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATETIME) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS TIMESTAMP(0)) IN ('2017-01-01T18:00:00.00000', '2017-01-02T18:00:00.00000'))")
+            expect(sql).to.contain('(CAST("column1" AS TIMESTAMP(0)) IN (\'2017-01-01T18:00:00.00000\', \'2017-01-02T18:00:00.00000\'))')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATETIME) IN (N'2017-01-01T18:00:00.000', N'2017-01-02T18:00:00.000'))")
@@ -644,7 +644,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain('(CAST("column1" AS DATE) IN (\'2017-01-01T00:00:00.00000\', \'2017-01-02T00:00:00.00000\'))')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) IN (N'2017-01-01T00:00:00.000', N'2017-01-02T00:00:00.000'))")
@@ -667,7 +667,7 @@ describe('Filter', () => {
             expect(sql).to.contain("(CAST(`column1` AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
             break
           case 'postgres':
-            expect(sql).to.contain("(CAST(\"column1\" AS DATE) NOT IN ('2017-01-01T00:00:00.00000', '2017-01-02T00:00:00.00000'))")
+            expect(sql).to.contain('(CAST("column1" AS DATE) NOT IN (\'2017-01-01T00:00:00.00000\', \'2017-01-02T00:00:00.00000\'))')
             break
           case 'mssql':
             expect(sql).to.contain("(CAST([column1] AS DATE) NOT IN (N'2017-01-01T00:00:00.000', N'2017-01-02T00:00:00.000'))")

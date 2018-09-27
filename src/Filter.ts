@@ -17,11 +17,11 @@ export class Filter {
         let condition: any = {};
         if (this.connection.getDialect() === 'postgres') {
           condition[column] = {
-            [Sequelize.Op.iLike]: '%' + value + '%'
+            [Sequelize.Op.iLike]: value
           };
         } else {
           condition[column] = {
-            [Sequelize.Op.like]: '%' + value + '%'
+            [Sequelize.Op.like]: value
           };
         }
         likeConditions.push(condition);
@@ -37,11 +37,11 @@ export class Filter {
         let condition: any = {};
         if (this.connection.getDialect() === 'postgres') {
           condition[column] = {
-            [Sequelize.Op.notILike]: '%' + value + '%'
+            [Sequelize.Op.notILike]: value
           };
         } else {
           condition[column] = {
-            [Sequelize.Op.notLike]: '%' + value + '%'
+            [Sequelize.Op.notLike]: value
           };
         }
         likeConditions.push(condition);
@@ -252,7 +252,7 @@ export class Filter {
   }
 
   addIn(column: string, values: Array<any>, type?: Sequelize.DataTypeAbstract) {
-    if (column && values && values.length) {
+    if (column) {
       let condition: any = {};
       switch (type) {
         case Sequelize.DATE:
@@ -281,7 +281,7 @@ export class Filter {
   }
 
   addNotIn(column: string, values: Array<any>, type?: Sequelize.DataTypeAbstract) {
-    if (column && values && values.length) {
+    if (column) {
       let condition: any = {};
       switch (type) {
         case Sequelize.DATE:
@@ -301,7 +301,7 @@ export class Filter {
           break;
         default:
           condition[column] = {
-            [Sequelize.Op.in]: values
+            [Sequelize.Op.notIn]: values
           };
           break;
       }

@@ -34,20 +34,20 @@
     "moment": "^2.19.1"
   },
   "devDependencies": {
-    "@types/sequelize": "^4.0.79",
+    "@types/chai": "^4.0.5",
     "@types/lodash": "^4.14.85",
     "@types/moment": "^2.13.0",
-    "@types/chai": "^4.0.5",
-    "typescript": "^2.6.1",
+    "@types/sequelize": "^4.0.79",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "jest": "21.x",
-    "ts-jest": "21.x",
-    "sqlite3": "^3.1.13",
     "mysql2": "^1.4.2",
     "pg": "^7.4.0",
+    "sqlite3": "^3.1.13",
     "tedious": "^2.1.1",
-    "tslint": "^5.8.0"
+    "ts-jest": "21.x",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1"
   },
   "repository": {
     "type": "git",
