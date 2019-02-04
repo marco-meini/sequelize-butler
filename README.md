@@ -1,6 +1,6 @@
 # sequelize-helper
 
-Useful features to facilitate the use of Sequelize
+Useful features to facilitate the use of Sequelize.
 
 ## Install
 
