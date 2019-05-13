@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/dm/sequelize-butler.svg)](https://www.npmjs.com/package/sequelize-butler)
 [![Build Status](https://travis-ci.org/marco-meini/sequelize-butler.svg?branch=master)](https://travis-ci.org/marco-meini/sequelize-butler)  
 
-Useful features to facilitate the use of Sequelize
+Useful features to facilitate the use of Sequelize.
 
 ## Install
 
