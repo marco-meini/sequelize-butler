@@ -1,6 +1,6 @@
 {
   "name": "sequelize-butler",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
   "types": "main.d.ts",
@@ -30,24 +30,25 @@
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "moment": "^2.23.0",
-    "sequelize": "^4.42.0"
+    "moment": "^2.24.0",
+    "sequelize": "^4.44.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
-    "@types/lodash": "^4.14.119",
+    "@types/jest": "^24.0.12",
+    "@types/lodash": "^4.14.126",
     "@types/moment": "^2.13.0",
-    "@types/sequelize": "^4.27.33",
+    "@types/sequelize": "^4.27.49",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "jest": "21.x",
-    "mysql2": "^1.6.4",
-    "pg": "^7.7.1",
-    "sqlite3": "^4.0.4",
+    "jest": "^24.8.0",
+    "mysql2": "^1.6.5",
+    "pg": "^7.11.0",
+    "sqlite3": "^4.0.8",
     "tedious": "^2.7.1",
-    "ts-jest": "^21.2.4",
-    "tslint": "^5.12.0",
-    "typescript": "^2.9.2"
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
   },
   "repository": {
     "type": "git",
