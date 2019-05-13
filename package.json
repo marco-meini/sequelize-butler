@@ -29,38 +29,39 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
-    "sequelize": "^4.22.5",
-    "moment": "^2.19.1"
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "sequelize": "^4.22.5"
   },
   "devDependencies": {
-    "@types/sequelize": "^4.0.79",
-    "@types/lodash": "^4.14.85",
+    "@types/chai": "^4.1.7",
+    "@types/jest": "^24.0.12",
+    "@types/lodash": "^4.14.126",
     "@types/moment": "^2.13.0",
-    "@types/chai": "^4.0.5",
-    "typescript": "^2.6.1",
-    "chai": "^4.1.2",
+    "@types/sequelize": "^4.0.79",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "jest": "21.x",
-    "ts-jest": "21.x",
-    "sqlite3": "^3.1.13",
-    "mysql2": "^1.4.2",
-    "pg": "^7.4.0",
-    "tedious": "^2.1.1",
-    "tslint": "^5.8.0"
+    "jest": "^24.8.0",
+    "mysql2": "^1.6.5",
+    "pg": "^7.11.0",
+    "sqlite3": "^4.0.8",
+    "tedious": "^6.1.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marco-meini/sequelize-butler.git"
+    "url": "git+https://github.com/ambrogio-dev/sequelize-helper.git"
   },
   "keywords": [
     "Sequelize",
     "helper"
   ],
-  "author": "Marco Meini",
+  "author": "Ambrogio S.r.l.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marco-meini/sequelize-helper/issues"
+    "url": "https://github.com/ambrogio-dev/sequelize-helper/issues"
   },
-  "homepage": "https://github.com/marco-meini/sequelize-helper#readme"
+  "homepage": "https://github.com/ambrogio-dev/sequelize-helper#readme"
 }
