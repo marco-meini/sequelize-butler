@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as Sequelize from 'sequelize';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export class Filter {
   private conditions: Array<any> = [];
