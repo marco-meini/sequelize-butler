@@ -1,6 +1,6 @@
 {
   "name": "sequelize-butler",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
   "types": "main.d.ts",
@@ -31,7 +31,7 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "sequelize": "^4.44.0"
+    "sequelize": "^5.8.6"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
@@ -45,7 +45,7 @@
     "mysql2": "^1.6.5",
     "pg": "^7.11.0",
     "sqlite3": "^4.0.8",
-    "tedious": "^2.7.1",
+    "tedious": "^6.1.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5"
