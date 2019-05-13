@@ -31,14 +31,14 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "sequelize": "^4.22.5"
+    "sequelize": "^5.8.6"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/jest": "^24.0.12",
     "@types/lodash": "^4.14.126",
     "@types/moment": "^2.13.0",
-    "@types/sequelize": "^4.0.79",
+    "@types/sequelize": "^4.27.49",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "jest": "^24.8.0",
