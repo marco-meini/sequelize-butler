@@ -1,18 +1,14 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __importStar(require("lodash"));
+const lodash_1 = __importDefault(require("lodash"));
 class Order {
     static getOrderBy(order, aliasMapping) {
         let _order = [];
-        _.forEach(order, (value) => {
-            let field = _.findKey(aliasMapping, _.partial(_.isEqual, value[0]));
+        lodash_1.default.forEach(order, (value) => {
+            let field = lodash_1.default.findKey(aliasMapping, lodash_1.default.partial(lodash_1.default.isEqual, value[0]));
             if (field) {
                 let _item = field.split('.');
                 if (value.length > 1)

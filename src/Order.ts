@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export class Order {
   public static getOrderBy(order: Array<Array<string>>, aliasMapping: any): Array<any> {
