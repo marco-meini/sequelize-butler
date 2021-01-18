@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SequelizeError = void 0;
 class SequelizeError {
     constructor(sequelizeError) {
         this.sequelizeError = sequelizeError;

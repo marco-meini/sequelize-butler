@@ -5,8 +5,7 @@ const Sequelize = require('sequelize')
 class Support {
   constructor (dialect) {
     this.sequelize = new Sequelize({
-      dialect: dialect,
-      operatorsAliases: false
+      dialect: dialect
     })
     this.model = this.sequelize.define('table', {
       id: {
