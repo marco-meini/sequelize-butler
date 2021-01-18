@@ -1,6 +1,6 @@
 {
   "name": "sequelize-butler",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Useful features to facilitate the use of Sequelize",
   "main": "index.js",
   "types": "main.d.ts",
