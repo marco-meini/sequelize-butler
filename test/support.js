@@ -28,7 +28,7 @@ class Support {
   }
 
   getSql (table, options) {
-    let sql = this.sequelize.dialect.QueryGenerator
+    let sql = this.sequelize.dialect.queryGenerator
     return sql.selectQuery(table, options)
   }
 }
