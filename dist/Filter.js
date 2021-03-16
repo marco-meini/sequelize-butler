@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Filter = void 0;
 const _ = require("lodash");
 const Sequelize = require("sequelize");
 const moment = require("moment");
