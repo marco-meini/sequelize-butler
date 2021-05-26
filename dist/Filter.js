@@ -71,7 +71,7 @@ class Filter {
             }
             else {
                 condition[column] = {
-                    [Sequelize.Op.eq]: null
+                    [Sequelize.Op.is]: null
                 };
             }
             this.conditions.push(condition);
@@ -103,7 +103,7 @@ class Filter {
             }
             else {
                 condition[column] = {
-                    [Sequelize.Op.ne]: null
+                    [Sequelize.Op.not]: null
                 };
             }
             this.conditions.push(condition);
